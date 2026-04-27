@@ -1,153 +1,147 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards Presupuesto Público - CIAF</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @page {
-            size: A4;
-            margin: 15mm;
-            background-color: #ffffff;
+        :root {
+            --ciaf-blue: #1565C0;
+            --ciaf-green: #2E7D32;
         }
         body {
+            background-color: #f3f4f6;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
-            line-height: 1.5;
-            margin: 0;
-            padding: 0;
         }
-        .header {
-            background-color: #1565C0; /* Azul CIAF */
-            color: white;
-            padding: 20pt;
-            text-align: center;
-            border-bottom: 5pt solid #2E7D32; /* Verde CIAF */
+        .perspective {
+            perspective: 1000px;
         }
-        .header h1 {
-            margin: 0;
-            font-size: 22pt;
-            text-transform: uppercase;
-        }
-        .header p {
-            margin: 5pt 0 0;
-            font-size: 12pt;
-            opacity: 0.9;
-        }
-        .section {
-            margin-top: 20pt;
-            padding: 10pt;
-        }
-        h2 {
-            color: #1565C0;
-            border-left: 5pt solid #2E7D32;
-            padding-left: 10pt;
-            font-size: 16pt;
-            margin-bottom: 10pt;
-        }
-        .flashcard-grid {
-            display: block;
-        }
-        .card {
-            border: 1pt solid #ddd;
-            margin-bottom: 10pt;
-            page-break-inside: avoid;
-            border-radius: 5pt;
-            overflow: hidden;
-        }
-        .card-front {
-            background-color: #f1f8e9; /* Verde muy claro */
-            padding: 10pt;
-            font-weight: bold;
-            color: #2E7D32;
-            border-bottom: 1pt solid #ddd;
-        }
-        .card-back {
-            padding: 10pt;
-            background-color: #ffffff;
-        }
-        table {
+        .flashcard-inner {
+            position: relative;
             width: 100%;
-            border-collapse: collapse;
-            margin: 10pt 0;
-        }
-        th {
-            background-color: #1565C0;
-            color: white;
-            padding: 8pt;
-            text-align: left;
-            font-size: 10pt;
-        }
-        td {
-            border: 1pt solid #ddd;
-            padding: 8pt;
-            font-size: 9pt;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .footer {
-            margin-top: 30pt;
+            height: 250px;
             text-align: center;
-            font-size: 9pt;
-            color: #777;
-            border-top: 1pt solid #eee;
-            padding-top: 10pt;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
         }
-        .highlight {
-            color: #1565C0;
-            font-weight: bold;
+        .flashcard-inner.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .flashcard-front {
+            background-color: white;
+            color: var(--ciaf-blue);
+            border: 3px solid var(--ciaf-blue);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        .flashcard-back {
+            background-color: var(--ciaf-green);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+        .ciaf-header {
+            background-color: var(--ciaf-blue);
+            border-bottom: 5px solid var(--ciaf-green);
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Herramienta de Estudio: Presupuesto Público</h1>
-        <p>Tecnología en Contabilidad - Institución CIAF</p>
-    </div>
 
-    <div class="section">
-        <h2>1. Estructura del CCPET y Fuentes de Financiación</h2>
-        <p>Relación técnica entre el Rubro (Identidad) y la Fuente (Bolsillo de uso legal) aplicada al presupuesto de Pereira.</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Código Rubro (1.x)</th>
-                    <th>Descripción</th>
-                    <th>Código Fuente (1.2.x)</th>
-                    <th>Tipo de Fuente / Uso</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>1.1.01.01.001</td><td>Impuesto Predial Unificado</td><td>1.2.1.0.00</td><td>ICLD (Funcionamiento e Inversión Libre)</td></tr>
-                <tr><td>1.1.01.01.002</td><td>Impuesto Industria y Comercio</td><td>1.2.1.0.00</td><td>ICLD (Funcionamiento e Inversión Libre)</td></tr>
-                <tr><td>1.1.01.02.101</td><td>Sobretasa a la Gasolina</td><td>1.1.2.0.01</td><td>Destinación Específica (Vías)</td></tr>
-                <tr><td>1.1.02.01.001</td><td>SGP Educación</td><td>1.2.4.1.01</td><td>SGP (Sector Educación)</td></tr>
-                <tr><td>1.1.02.01.005</td><td>SGP Salud</td><td>1.2.4.2.02</td><td>SGP (Sector Salud)</td></tr>
-                <tr><td>2.x.x.x.x</td><td>GASTOS</td><td>-</td><td>Funcionamiento e Inversión</td></tr>
-                <tr><td>3.x.x.x.x</td><td>SERVICIO DE LA DEUDA</td><td>-</td><td>Pago de Capital e Intereses</td></tr>
-            </tbody>
-        </table>
-    </div>
+    <header class="ciaf-header text-white p-6 text-center shadow-lg mb-8">
+        <h1 class="text-3xl font-bold uppercase tracking-wider">Simulador de Estudio CIAF</h1>
+        <p class="text-lg opacity-90 mt-2">Tecnología en Contabilidad - Presupuesto Público</p>
+    </header>
 
-    <div class="section">
-        <h2>2. Flashcards de Preparación (Parcial)</h2>
-        <div class="flashcard-grid">
-            <div class="card"><div class="card-front">ICLD</div><div class="card-back">Ingresos Corrientes de Libre Destinación: Recursos propios que el municipio usa con autonomía para funcionamiento e inversión.</div></div>
-            <div class="card"><div class="card-front">SGP (Sistema General de Participaciones)</div><div class="card-back">Transferencias de la Nación para sectores como Salud, Educación, Agua Potable, Deporte, Cultura, entre otros.</div></div>
-            <div class="card"><div class="card-front">Dígito inicial '3' (CCPET)</div><div class="card-back">Identifica el SERVICIO DE LA DEUDA PÚBLICA: Pagos de capital e intereses de préstamos bancarios.</div></div>
-            <div class="card"><div class="card-front">Cadena Presupuestal</div><div class="card-back">Pasos operativos del gasto: 1. Solicitud de CDP -> 2. Expedición de CDP -> 3. Registro Presupuestal (RP) -> 4. Obligación (OBL) -> 5. Orden de Pago (OP).</div></div>
-            <div class="card"><div class="card-front">Ciclo Presupuestal (3 Pasos)</div><div class="card-back">1. Planeación (Proyección y aprobación) -> 2. Ejecución (Recaudo y gasto) -> 3. Cierre (Evaluación y liquidación definitiva).</div></div>
-            <div class="card"><div class="card-front">Ley 617 de 2000</div><div class="card-back">Establece límites de gastos de funcionamiento basados en los ICLD del municipio.</div></div>
-            <div class="card"><div class="card-front">Diferencia Rubro vs Fuente</div><div class="card-back">El Rubro es el nombre del dinero (Ej: Predial); la Fuente es el permiso de uso legal (Ej: ICLD).</div></div>
-            <div class="card"><div class="card-front">CDP vs RP</div><div class="card-back">El CDP garantiza disponibilidad de saldo; el RP perfecciona el compromiso legal con un tercero (contrato).</div></div>
-            <div class="card"><div class="card-front">Estampillas</div><div class="card-back">Tributos con destinación específica para sectores sociales como Adulto Mayor y Cultura.</div></div>
-            <div class="card"><div class="card-front">Equilibrio Presupuestal</div><div class="card-back">Principio que exige que los Ingresos (1) sean iguales a los Gastos (2) + Servicio de la Deuda (3).</div></div>
+    <main class="container mx-auto px-4 pb-12">
+        <div class="mb-8 text-center">
+            <h2 class="text-2xl font-semibold text-gray-800">Flashcards para el Parcial</h2>
+            <p class="text-gray-600">Haz clic en cada tarjeta para ver la respuesta.</p>
         </div>
-    </div>
 
-    <div class="footer">
-        Documento generado para apoyo académico - Tecnología en Contabilidad CIAF<br>
-        Experticia en Hacienda Pública y Presupuesto
-    </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cards-container">
+            <!-- Cards will be injected here -->
+        </div>
+    </main>
+
+    <footer class="text-center p-6 text-gray-500 text-sm border-top border-gray-200">
+        &copy; 2026 CIAF - Institución de Educación Superior | Facultad de Ciencias Contables
+    </footer>
+
+    <script>
+        const flashcardsData = [
+            { front: "ICLD", back: "Ingresos Corrientes de Libre Destinación: Recursos propios (impuestos) que el municipio usa con autonomía para funcionamiento e inversión." },
+            { front: "Código CCPET 1.1.01.01.001", back: "Identificador del Impuesto Predial Unificado dentro del catálogo de ingresos tributarios." },
+            { front: "Etapa de Programación", back: "Fase inicial donde se calculan las proyecciones de ingresos y gastos basadas en el IPC y el PIB." },
+            { front: "Ley 617 de 2000", back: "Norma que pone límites a los gastos de funcionamiento basados en los ICLD para evitar la quiebra de municipios." },
+            { front: "Destinación Específica", back: "Dinero que por ley 'nace' con un fin único. Prohibido usarlo para fines diferentes (Ej: Estampillas)." },
+            { front: "SGP (Sistema General de Participaciones)", back: "Transferencias de la Nación para sectores como Salud, Educación, Agua Potable, Deporte, Cultura, Primera Infancia y Propósito General, entre otros." },
+            { front: "Decreto de Liquidación", back: "Documento oficial del Alcalde que desglosa y pone en marcha el presupuesto aprobado por el Concejo." },
+            { front: "Dígito inicial '1' (CCPET)", back: "Identifica los INGRESOS: Representa toda la entrada de recursos a la tesorería." },
+            { front: "Dígito inicial '2' (CCPET)", back: "Identifica los GASTOS: Incluye Funcionamiento e Inversión." },
+            { front: "Dígito inicial '3' (CCPET)", back: "Identifica el SERVICIO DE LA DEUDA: Pagos de capital e intereses de préstamos bancarios." },
+            { front: "Gasto de Funcionamiento", back: "Apropiaciones para la operatividad administrativa: Nómina, servicios públicos y papelería." },
+            { front: "Gasto de Inversión", back: "Recursos destinados a proyectos sociales e infraestructura para el bienestar de la comunidad." },
+            { front: "Plan de Desarrollo Municipal", back: "Hoja de ruta de 4 años que justifica cada inversión incluida en el presupuesto." },
+            { front: "Equilibrio Presupuestal", back: "Principio legal: El total de los ingresos (1) debe ser igual a la suma de los gastos (2) y la deuda (3)." },
+            { front: "IPC (Inflación)", back: "Variable macroeconómica usada para ajustar el valor del presupuesto anual y mantener el poder adquisitivo." },
+            { front: "Fuente ICLD (1.2.1.0.00)", back: "Bolsillo de recursos propios. Es el único que permite financiar la nómina administrativa general." },
+            { front: "Uso del SGP Educación", back: "Financiar el servicio educativo, pago de docentes y mantenimiento de colegios públicos." },
+            { front: "Uso de las Estampillas", back: "Financiar sectores específicos con 'etiqueta' social como Cultura (Pro-Cultura) o Adulto Mayor." },
+            { front: "Concepto de TASAS", back: "Pagos recibidos por un servicio prestado (ej. Tasa Pro-Deporte) destinados a fomentar dicha actividad." },
+            { front: "Recursos de Capital", back: "Ingresos extraordinarios como créditos, rendimientos financieros o venta de activos estatales." },
+            { front: "Apropiación", back: "Autorización máxima legal que otorga el Concejo para gastar en un rubro específico durante la vigencia." },
+            { front: "Vigencia Fiscal", back: "Año presupuestal: Inicia siempre el 1 de enero y termina el 31 de diciembre." },
+            { front: "Estatuto Orgánico", back: "La norma superior que dicta cómo se programa, aprueba y ejecuta el presupuesto público." },
+            { front: "POAI", back: "Plan Operativo Anual de Inversiones: Conecta los proyectos sociales con el dinero disponible." },
+            { front: "MFMP", back: "Marco Fiscal de Mediano Plazo: Proyecciones a 10 años para garantizar la sostenibilidad fiscal." },
+            { front: "Sobretasa a la Gasolina", back: "Fuente con destino fijo por ley exclusivamente para vías y sistemas de transporte." },
+            { front: "Pasivos Prestacionales", back: "Reserva obligatoria para cubrir el pago de pensiones y cesantías de los funcionarios." },
+            { front: "Cadena Presupuestal", back: "Pasos operativos del gasto: 1. Solicitud de CDP -> 2. Expedición de CDP -> 3. Registro Presupuestal (RP) -> 4. Obligación (OBL) -> 5. Orden de Pago (OP)." },
+            { front: "Diferencia Rubro vs Fuente", back: "El Rubro es el NOMBRE del dinero (Predial); la Fuente es el PERMISO de uso legal (ICLD)." },
+            { front: "Uso de la Cuenta 3 (Deuda)", back: "Destinada exclusivamente para honrar obligaciones financieras (capital e intereses) contraídas anteriormente." },
+            { front: "Ciclo Presupuestal (3 Pasos)", back: "1. Planeación (Proyección y aprobación) -> 2. Ejecución (Recaudo y gasto) -> 3. Cierre (Evaluación y liquidación definitiva)." },
+            { front: "CDP vs RP", back: "El CDP garantiza que hay disponibilidad de saldo; el RP perfecciona el compromiso legal (ej. firma de contrato)." }
+        ];
+
+        const container = document.getElementById('cards-container');
+
+        flashcardsData.forEach(card => {
+            const cardElement = document.createElement('div');
+            cardElement.className = 'perspective h-64';
+            cardElement.innerHTML = `
+                <div class="flashcard-inner w-full h-full">
+                    <div class="flashcard-front">
+                        <p>${card.front}</p>
+                    </div>
+                    <div class="flashcard-back">
+                        <p>${card.back}</p>
+                    </div>
+                </div>
+            `;
+            
+            cardElement.querySelector('.flashcard-inner').addEventListener('click', function() {
+                this.classList.toggle('is-flipped');
+            });
+            
+            container.appendChild(cardElement);
+        });
+    </script>
 </body>
 </html>
